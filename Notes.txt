@@ -1,0 +1,91 @@
+JavaScript Engine comes with every browser and earlier it was not possible to run JS without browser.
+Chrome has v8 engine 
+Firefox has spidermonkey
+Safari has Apple JS engine
+
+Ryan Dhal took V8 engine from chrome and embedded it with CPP and named the project as NodeJS (DOM releated elements were removed)
+Benefits - 
+Can run JS outside of browser
+JS can talk to native machine because of CPP
+Can create webservers with the help of JS
+
+NodeJS is a runtime environment for JavaScript
+
+npm - node package manager 
+
+npm init - to start a node project
+
+it generates package.json 
+package.json is a configuration file in which we can make our own scripts, can name our application and install dependencies 
+
+in order to use different module into your current code, we use require example const abc = require('')
+This require function is built-in in node, it's not in JS
+
+fs module is buit-in in NodeJs, it is used for file handling 
+
+In fs.readFileSync it returns 
+while in fs.readFile it does not return so we have to give callback function 
+
+NodeJS Architecture
+Client -----request----> server
+request comes to server and very firstly get queued into EventQueue, after that the request goes to eventloop (Event Loop is kind a machine that always watches our event queue and one by one takes request from the event queue in the FIFO manner, now when the request is picked it can be of two types Blocking operations/request (synchronous) and Non Blocking operations/request (asynchronous), if the request is non blocking then it's processed and response is sent to the user but if it's a blocking operation then the request goes to thread pool (Thread pool is a kind of pool which contains all threads and can be assumed as worker, these threads are responsible for fulfilling the blocking operations), first it checks if the worker is available as we have limited threads, then it assigns the request to it, after the work is completed the worker returns to the thread pool and returns the result, this result is now sent to the user as response
+
+http package is used to build web server, http is built-in in NodeJS
+To run the server we require port number, for that purpose we will use listen function to open that port for the server to listen the incoming request form the client. One port can only run one server, for multiple servers we require multiple ports 
+
+URL - Unifrom Resource Locator
+https://www.facebook.com/
+https - It is a protocol (Hypertext Transfer Protocol Secure). Protocol is a set of rules which tells the browser how to communicate. as it's https so encrypted communication will take place which uses SSL/TLS certificate 
+www.facebook.com - This is domain (domain is user friendly name of IP address of server)
+/ - the slash at end is the path. / means root or homepage and anything written after slash is that path example /contact 
+/project/1 - It is nested path
+/about?user=1&a=2 = It is called query parameters, these are the extra informations passed in the url primarily from the frontend example when we login to facebook the userid is passed from the frontend then we get logged in 
+
+npm i url - this is a package which will divide the url into protocol path host etc etc 
+
+HTTP methods - 
+GET - When you want to get some data from the server
+POST - When you want to send and mutate some data in the server
+PUT
+PATCH
+DELETE
+
+
+const http = require('http')
+const fs = require('fs')
+const url = require('url')
+const myServer = http.createServer((req, res)=>{
+    if (req.url == '/favicon.ico') return res.end();
+    const log = `${Date.now()} ${req.url} ${req.method} New Request Recieved\n`
+    const myUrl = url.parse(req.url,true)
+    // console.log(myUrl);
+    
+    fs.appendFile('./log.txt',log,(err,data)=>{
+        switch(myUrl.pathname){
+            case '/':
+                if(req.method=== 'GET') res.end("HomePage")
+                break
+            case '/about':
+                const qp = myUrl.query.name
+                res.end(`Hi ${qp}`)
+                break
+            case '/search':
+                const search = myUrl.query.search_query
+                res.end(`Here are your search result from ${search}`)
+                break
+            case '/singup':
+                if(req.method==='GET') res.end("This is a singup form")
+                else if(req.method==="POST"){
+                    //DB query
+                    res.end("Success") 
+                }
+                break
+            default:
+                res.end("404 Not found")
+        }
+    })
+})  // The arrow function is responsible for processing the incoming request 
+myServer.listen(8000,()=>{console.log("Server Started")})
+In normal node we have to write this entire handler function in which we have mutiple issues in managing the http methods and other so we will use express framework which handles this handler function on it's own
+
+
