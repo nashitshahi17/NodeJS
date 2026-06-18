@@ -89,3 +89,24 @@ myServer.listen(8000,()=>{console.log("Server Started")})
 In normal node we have to write this entire handler function in which we have mutiple issues in managing the http methods and other so we will use express framework which handles this handler function on it's own
 
 
+app.use () ---> it is used to make middlewares 
+Middleware functions are functions that have access to the request object(req) and response object(res) and the next middleware function in the applications request-response cycle. The next middleware function is commonly denoted by variable named next.
+Middleware functions can perform the following tasks:
+Execute any code
+Make changes to the request-response objects
+End the request-response cycle
+Call the next middleware function in the stack
+
+HTTP headers are an important part of the API request and response as they represent the meta-data associated with the API request and response
+Headers carry information for the request and response body
+
+Always add X to custom headers 
+
+Status codes
+Informational => 100-199
+Successful => 200-299
+Redirection => 300-399
+Client-side error => 400-499
+Server-side error => 500-599
+
+Running the server with node requires restarting the server everytime the change is made in order to solve it we can use a package called nodemon, this package will automatically referesh the server, every time a change is made.
