@@ -8,7 +8,7 @@ const app = express()
 const PORT = 8000
 
 // Connection
-connectMongoDB('mongodb://127.0.0.1:27017/demo')
+connectMongoDB('mongodb://127.0.0.1:27017/demo').then(()=>{console.log("MongoDB Connected")})
 
 // MiddleWare
 app.use(express.urlencoded({extended:false}))
@@ -21,7 +21,7 @@ app.use(logreqres("log.txt"))
 
 // Routes
 
-app.use('/users',userRouter)
+app.use('/api/users',userRouter)
 
 
 // app.get('/users',(req,res)=>{
