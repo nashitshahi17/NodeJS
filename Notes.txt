@@ -109,4 +109,29 @@ Redirection => 300-399
 Client-side error => 400-499
 Server-side error => 500-599
 
-Running the server with node requires restarting the server everytime the change is made in order to solve it we can use a package called nodemon, this package will automatically referesh the server, every time a change is made.
+200 - ok while get response
+201 - created while post response
+400 - bad request (if all fields are not mentioned while send the data)
+401 - Unauthorized
+402 - Payment required (It's not stable yet under development)
+403 - Forbidden
+404 - Not Found
+
+Running the server with node requires restarting the server everytime the change is made in order to solve it we can use a package called nodemon, this package will automatically restart 
+the server, every time a change is made.
+
+MongoDB => No sql Document Based Database
+	   Strong supoort for Aggregation pipelines
+	   Works on BSON format
+	   Best for Node applications 
+
+collections equivalent to tables in sql
+document equivalent to row in sql (means data)
+
+install mongoose - it is the orm for mongodb
+when working with mongodb first make schema then make model then perfrom operations 
+
+MVC - Model, View, Controller
+Controller manipulates model and model updates the view
+
+For server-side rendering we will use EJS - Embedded Javascript templating (it is a templating engine)
